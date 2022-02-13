@@ -38,6 +38,7 @@ class EmployeeController extends Controller
         return view('Employee.attendance_history', $atten_emp);
     }
 
+    
     public function endtime(Request $request)
     {
         // $request->validate([

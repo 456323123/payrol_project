@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('content')
+@php  
+use App\Models\Role;
 
+              $simple=Role::where('name','!=','super admin')->get();
+              $superadmin=Role::get();
+              @endphp
     
     <section id="basic-datatable">
     
@@ -181,17 +186,30 @@
 </div>
 </div>
 </div>
+
 <div class="col-6">
 <div class="form-group">
 <label for="contact-info-icon">Roles</label>
 <div class="position-relative has-icon-left">
-<select name="user_role" class="form-control" id="gender" required>
-<option value="" disabled>Select Option</option>
-<option value="admin">Admin</option>
-<option value="user">Employe</option>
-<option value="super admin">Super Admin</option>
+  <select name="user_role" class="form-control"  >
+                                                 @if(auth()->user()->user_role=="super admin")         
 
-</select>
+                                                    @foreach($superadmin as  $value) 
+                                                    <option value="{{ $value->name }}">{{$value->name   }}</option>
+                                                      
+                                                     
+                                                    @endforeach
+                                                    @else
+                                                 @foreach($simple as  $value) 
+                                                    <option value="{{ $value->name }}"  >{{$value->name   }}</option>
+                                                      
+                                                     
+                                                    @endforeach
+
+@endif
+
+
+    </select>
 <div class="form-control-position">
 <i class="feather icon-users"></i>
 </div>

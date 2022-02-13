@@ -18,7 +18,7 @@ class employee
     public function handle(Request $request, Closure $next)
     {
 
-        if(!Auth::guest() && Auth::user()->user_role == 'user')
+        if(!Auth::guest() && Auth::user()->user_role == 'Employee')
         {
             return $next($request);
         }

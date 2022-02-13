@@ -35,18 +35,14 @@
 </div>
 </div>
 </div>
+
 <div class="col-6">
 <div class="form-group">
-<label for="contact-info-icon">Roles</label>
+<label for="contact-info-icon">Email</label>
 <div class="position-relative has-icon-left">
-<select name="user_role" class="form-control"  required>
-<option value="super admin">Super Admin</option>
-<option value="admin">Admin</option>
-<option value="user">Employe</option>
-
-</select>
+<input type="email" id="contact-info-icon" class="form-control" value="{{ $user->email }}" name="email" placeholder="Email" required>
 <div class="form-control-position">
-<i class="feather icon-users"></i>
+<i class="feather icon-mail"></i>
 </div>
 </div>
 </div>
@@ -81,11 +77,29 @@
 
 <div class="col-6">
 <div class="form-group">
-<label for="contact-info-icon">Email</label>
+<label for="contact-info-icon">Roles</label>
 <div class="position-relative has-icon-left">
-<input type="email" id="contact-info-icon" class="form-control" value="{{ $user->email }}" name="email" placeholder="Email" required>
+  <select name="user_role" class="form-control"  >
+                                                 @if(auth()->user()->user_role=="super admin")         
+
+                                                    @foreach($superadmin as  $value) 
+                                                    <option value="{{ $value->name }}"  @if($value->name==$user->user_role) selected @endif>{{$value->name   }}</option>
+                                                      
+                                                     
+                                                    @endforeach
+                                                    @else
+                                                 @foreach($simple as  $value) 
+                                                    <option value="{{ $value->name }}"  @if($value->name==$user->user_role) selected @endif>{{$value->name   }}</option>
+                                                      
+                                                     
+                                                    @endforeach
+
+@endif
+
+
+    </select>
 <div class="form-control-position">
-<i class="feather icon-mail"></i>
+<i class="feather icon-users"></i>
 </div>
 </div>
 </div>
@@ -505,7 +519,7 @@
 
 
                                                             <tr>
-                                                                <td>Holidays</td>
+                                                                <td>Vocations</td>
                                                                     <td>
                                                                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="users-checkbox25" @if(isset($viewholidays)) {{ $viewholidays }} @endif 

@@ -16,7 +16,7 @@ class admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->user_role!='user') {
+                if (Auth::user()->user_role!='Employee') {
             if (!Auth::guest()) {
                 return $next($request);
             }

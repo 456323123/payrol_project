@@ -29,6 +29,23 @@
                   <li class={{ Request::is('company')? 'active' : '' }} ><a href="{{ route('company') }}"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Company">Company</span></a>
                 </li>  --}}
 
+@if(auth()->user()->user_role!='super admin' )
+                <li class={{ Request::is('admin/dashboard/clock')? 'active' : '' }}>
+                    <a href="{{route('admin.clock')}}">
+                        <i class="feather icon-clock"></i>
+                        <span class="menu-title" data-i18n="services">Clock</span>
+                    </a>
+                  </li>
+
+                  <li class={{ Request::is('admin/your/attendance_history')? 'active' : '' }}>
+                    <a href="{{url('admin/your/attendance_history')}}">
+                        <i class="feather icon-clock"></i>
+                        <span class="menu-title" data-i18n="services">Your Attendance </span>
+                    </a>
+                  </li>
+
+                  
+@endif
 
                 <li class={{ Request::is('admin/dashboard')? 'active' : '' }}><a href="{{route('admin.dashboard')}}"><i class="feather icon-home"></i><span class="menu-title" data-i18n="services">Dashboard</span></a>  </li>
        @php $Employepermision = App\Models\Permission::where(['user_id'=>auth::user()->id,'module'=>'employes'])->count();@endphp   
@@ -76,7 +93,7 @@
                         <span class="menu-title" data-i18n="services">Payroll Start Date</span>
                     </a>
                   </li>
-#
+
                   <li class={{ Request::is('admin/processedPayroll')? 'active' : '' }}>
                     <a href="{{route('processedPayroll')}}">
                         <i class="feather icon-list"></i>
@@ -123,7 +140,8 @@
                     </a>
                   </li>
                   @endif
-
+                  @php $holidays = App\Models\Permission::where(['user_id'=>auth::user()->id,'module'=>'holidays'])->count();@endphp   
+@if($holidays)
      <li class=" nav-item"><a href="#"><i class="feather icon-layout"></i><span class="menu-title" data-i18n="Content">Holidays</span></a>
                     <ul class="menu-content">
                         <li class={{ Request::is('admin/sick-leave')? 'active' : '' }}><a href="{{url('admin/sick-leave')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Grid">Sick Leave</span></a>
@@ -135,6 +153,7 @@
                        
                     </ul>
                 </li>  
+                @endif
                   @php $notice = App\Models\Permission::where(['user_id'=>auth::user()->id,'module'=>'bonus','full_access'=>'1'])->count();@endphp   
 @if($notice==1)
 <li class={{ Request::is('admin/notices')? 'active' : '' }}>
@@ -145,10 +164,20 @@
                 </li>
 @endif
 @if(auth::user()->user_role=='super admin' || auth::user()->user_role=='admin')
-                <li class={{ Request::is('admin/add//user/permission')? 'active' : '' }}>
+                <li class={{ Request::is('admin/add/user/permission')? 'active' : '' }}>
                     <a href="{{route('add.admin.permission')}}">
                         <i class="feather icon-lock"></i>
                         <span class="menu-title" data-i18n="services">User Permission</span>
+                    </a>
+                </li>
+                @endif
+
+
+                @if(auth::user()->user_role=='super admin' || auth::user()->user_role=='admin')
+                <li class={{ Request::is('admin/add/roles') ? 'active' : '' }}>
+                    <a href="{{route('add.roles')}}">
+                        <i class="feather icon-unlock"></i>
+                        <span class="menu-title" data-i18n="services">Add Roles </span>
                     </a>
                 </li>
                 @endif

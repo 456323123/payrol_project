@@ -33,8 +33,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::prefix('admin')->middleware('admin')->namespace('App\\Http\\Controllers\\Admin')->group(function () {
+    Route::get('dashboard/clock', 'AdminController@clock')->name('admin.clock');
+Route::post('start-time', 'AdminController@starttime')->name('admin.starttime');
+    Route::post('end-time', 'AdminController@endtime')->name('admin.endtime');
+    Route::get('your/attendance_history', 'AdminController@user_attendance_history')->name('admin.attendance_history');
 
-    // Route::prefix('admin')->namespace('App\\Http\\Controllers\\Admin')->group(function () {
     Route::get('dashboard', 'AdminController@dashboard')->name('admin.dashboard');
     Route::get('employees', 'AdminController@employees')->name('admin.employees');
     Route::get('department', 'AdminController@department')->name('admin.department');
@@ -109,7 +112,9 @@ Route::prefix('admin')->middleware('admin')->namespace('App\\Http\\Controllers\\
     Route::get('permission', 'AdminController@AddAdmin')->name('add.admin.permission');
         Route::any('permission/{id}', [AdminController::class, 'Adminpermissionupdate'])->name('permission.update');
 
-        Route::any('permission/access/{id}', [AdminController::class, 'perMision'])->name('permission.access');
+        Route::any('add/roles', [AdminController::class, 'AddRoles'])->name('add.roles');
+                Route::post('update/roles/{id}', [AdminController::class, 'UpdateRoles'])->name('update.roles');
+
     Route::post('/admin/create/user', [AdminController::class, 'AdmincreateUser'])->name('admin.create.user');
 
 
